@@ -1,6 +1,4 @@
-# 쇼핑몰 장바구니 & 할인 쿠폰
-
-# 상품 클래스 (자동 번호 부여 & 재고 관리)
+# 상품 클래스
 class Product:
     count = 1  # 상품 번호 카운트
 
@@ -168,8 +166,6 @@ class Shop:
             print("1개 이상 담아야 합니다.")
             return
 
-        # ---------------------------------------------
-        # [수정된 부분] 이미 장바구니에 담겨있는 개수도 합쳐서 검사!
         already_in_cart = 0
         if selected_product in self.cart.items:
             already_in_cart = self.cart.items[selected_product]
@@ -177,7 +173,6 @@ class Shop:
         if already_in_cart + amount > selected_product.stock:
             print("재고가 부족합니다! (남은 재고: " + str(selected_product.stock) + "개, 장바구니에 담긴 수량: " + str(already_in_cart) + "개)")
             return
-        # ---------------------------------------------
 
         self.cart.add_item(selected_product, amount)
         print(selected_product.name + " 상품을 장바구니에 담았습니다.")
@@ -252,7 +247,7 @@ class Shop:
         self.show_cart()
         ans = input("\n결제하시겠습니까? (y/n) : ")
         if ans == "y":
-            # 물건 산 만큼 상품 재고 깎기
+
             for product in self.cart.items:
                 count = self.cart.items[product]
                 product.reduce_stock(count)
@@ -260,12 +255,9 @@ class Shop:
             print("\n결제가 완료되었습니다!")
             self.cart.clear()
 
-            # 줄어든 재고 바로 보여주기
             self.show_products()
         else:
             print("결제를 취소했습니다.")
 
-
-if __name__ == "__main__":
-    shop = Shop()
-    shop.run()
+shop = Shop()
+shop.run()
